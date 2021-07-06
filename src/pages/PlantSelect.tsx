@@ -35,11 +35,16 @@ interface PlantsProps {
 export function PlantSelect(){
     const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
     const [plants, setPlants] = useState<PlantsProps[]>([]);
+    const [enviromentSelected, setEnviromentSelected] = useState("all");
 
+    function handleEnviromentSelected(enviroment: string){
+        setEnviromentSelected(enviroment);
+    }
 
     useEffect(() =>{
         async function fetchEnviroment(){
-            const { data } = await api.get('plants_environments');
+            const { data } = await api
+            .get('plants_environments?_sort=title&_order=asc');
             setEnviroments([
                 {
                     key: 'all',
@@ -53,7 +58,8 @@ export function PlantSelect(){
 
     useEffect(() => {
         async function fetchPlants(){
-            const { data } = await api.get('plants');
+            const { data } = await api
+            .get('plants?_sort=name&_order=asc');
             setPlants(data)
         }
         fetchPlants();	
@@ -76,6 +82,8 @@ export function PlantSelect(){
                     renderItem={({ item }) => (
                         <EnviromentButton 
                             title={item.title}
+                            active={item.key === enviromentSelected}
+                            onPress={() => handleEnviromentSelected(item.key)}
                         />
                     )}
                     horizontal
