@@ -15,6 +15,8 @@ import {Button} from '../components/Button';
 
 import { useNavigation } from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -41,10 +43,11 @@ export function UserIdentification(){
         setName(value);
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
         if(!name){
             setError(true);
         } else {
+            await AsyncStorage.setItem('@plantmanager:user', name);
             navigation.navigate('Confirmation');
         }
     }
@@ -87,7 +90,7 @@ export function UserIdentification(){
                             <View style={styles.errorContainer}>
                                 {error && (
                                     <Text style={styles.errorText}>
-                                        Por favor, preencha o seu nome!
+                                        Me diz como chamar você 😢
                                     </Text>
                                 )}
                             </View>
