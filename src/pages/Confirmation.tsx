@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Button } from '../components/Button';
 
 import colors from '../styles/colors';
@@ -14,10 +16,19 @@ import fonts from '../styles/fonts';
 
 export function Confirmation(){
     const navigation = useNavigation();
+    const [userName, setUserName]= useState<string>();
 
     function handleMoveOn(){
         navigation.navigate('PlantSelect');
     }
+
+    useEffect(() => {
+        async function loadStorageUserName(){
+            const user = await AsyncStorage.getItem('@plantmanager:user');
+            setUserName(user || '');
+        }
+        loadStorageUserName();
+    }, [userName]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -26,7 +37,7 @@ export function Confirmation(){
                     😁
                 </Text>
                 <Text style={styles.title}>
-                    Prontinho
+                    Prontinho, {userName}!
                 </Text>
                 <Text style={styles.subTitle}>
                     Agora vamos começar a cuidar das suas plantinhas
