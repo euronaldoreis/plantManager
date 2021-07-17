@@ -8,7 +8,8 @@ import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Platform,
-    Keyboard
+    Keyboard,
+    Alert
 } from 'react-native';
 
 import {Button} from '../components/Button';
@@ -47,8 +48,12 @@ export function UserIdentification(){
         if(!name){
             setError(true);
         } else {
-            await AsyncStorage.setItem('@plantmanager:user', name);
-            navigation.navigate('Confirmation');
+            try{
+                await AsyncStorage.setItem('@plantmanager:user', name);
+                navigation.navigate('Confirmation');
+            }catch{
+                Alert.alert('Não foi possível o seu nome. 😢');
+            }
         }
     }
 
