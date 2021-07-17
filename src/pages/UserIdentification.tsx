@@ -22,6 +22,7 @@ export function UserIdentification(){
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
     const [name, setName] = useState<string>();
+    const [error, setError] = useState<boolean>(false);
 
     const navigation = useNavigation();
 
@@ -36,11 +37,16 @@ export function UserIdentification(){
 
     function handleInputChange(value: string){
         setIsFilled(!!value);
+        setError(!value);
         setName(value);
     }
 
     function handleSubmit() {
-        navigation.navigate('Confirmation');
+        if(!name){
+            setError(true);
+        } else {
+            navigation.navigate('Confirmation');
+        }
     }
 
     return (
@@ -77,6 +83,13 @@ export function UserIdentification(){
                                     title="Confirmar"
                                     onPress={handleSubmit}
                                 />
+                            </View>
+                            <View style={styles.errorContainer}>
+                                {error && (
+                                    <Text style={styles.errorText}>
+                                        Por favor, preencha o seu nome!
+                                    </Text>
+                                )}
                             </View>
                         </View>
                     </View>
@@ -133,4 +146,11 @@ const styles = StyleSheet.create({
         marginTop: 40,
         paddingHorizontal: 20
     },
+    errorText: {
+        fontFamily: fonts.heading,
+        color: colors.red,
+    },
+    errorContainer: {
+        marginTop: 20,
+    }
 });
