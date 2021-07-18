@@ -17,6 +17,7 @@ import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
+import { Load } from '../components/Load';
 
 export function MyPlants(){
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -34,7 +35,7 @@ export function MyPlants(){
             );
 
             setNextWatered(
-                `Não esqueça de regar a ${plantStorage[0].name} à ${nextTime} horas.`
+                `Não esqueça de regar a ${plantStorage[0].name} à ${nextTime}.`
             )
 
             setMyPlants(plantStorage);
@@ -44,6 +45,9 @@ export function MyPlants(){
         loadStorageData();
 
     }, [])
+
+    if(loading)
+        return <Load />
 
     return (
         <View style={styles.container}>
