@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     title: {
-        fontFamily: fonts.heading,
         fontSize: 28,
+        fontFamily: fonts.heading,
         textAlign: 'center',
         color: colors.heading,
         marginTop: 38,
