@@ -123,7 +123,7 @@ export function PlantSelect(){
                             onPress={() => handleEnviromentSelected(item.key)}
                         />
                     )}
-                    horizontal
+                    horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.enviromentList}
                  />
@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         paddingBottom: 5,
-        marginLeft: 32,
         marginVertical: 32,
     },
     plants: {
